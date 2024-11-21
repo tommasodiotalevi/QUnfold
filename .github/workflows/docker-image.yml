@@ -60,6 +60,7 @@ jobs:
       with:
         file: ${{ matrix.dockerfile }}
         platforms: ${{ matrix.platform }}
+        outputs: "type=registry"
         tags: |
           ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:${{ env.RELEASE_VERSION }}
           ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:latest
