@@ -55,7 +55,20 @@ jobs:
     #   tags: marcolorusso/${{ matrix.tagname }}:latest
     #    push: true
 
-    - name: Build on ghcr.io
+    - name: Build on ghcr.io manually
+      if: github.event_name == 'workflow_dispatch' 
+      uses: docker/build-push-action@v6
+      with:
+        file: ${{ matrix.dockerfile }}
+        platforms: ${{ matrix.platform }}
+        outputs: "type=registry"
+        tags: |
+          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:${{ env.CURRENT_VERSION }}
+          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:latest
+        push: true
+
+    - name: Build on ghcr.io on release
+      if: github.event_name != 'workflow_dispatch' 
       uses: docker/build-push-action@v6
       with:
         file: ${{ matrix.dockerfile }}
@@ -65,6 +78,3 @@ jobs:
           ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:${{ env.RELEASE_VERSION }}
           ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:latest
         push: true
-      
-      
-      
