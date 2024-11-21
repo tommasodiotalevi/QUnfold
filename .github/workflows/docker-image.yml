@@ -61,8 +61,8 @@ jobs:
         file: ${{ matrix.dockerfile }}
         platforms: ${{ matrix.platform }}
         tags: |
-          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/kernel-root:${{ env.RELEASE_VERSION }}
-          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/kernel-root:latest
+          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:${{ env.RELEASE_VERSION }}
+          ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ matrix.tagname }}:latest
         push: true
       
       
